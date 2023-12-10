@@ -3,6 +3,29 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 const PORT = 5000;
+const { MongoClient } = require('mongodb');
+
+const uri = "mongodb+srv://TheMovieWatcher:Elm2112@moviewatcher.hsps3gi.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+async function createUser(username, password) {
+  try {
+    await client.connect();
+
+    const usersCollection = client.db('moviewatcher').collection('users');
+
+    // Insert a new user document
+    const result = await usersCollection.insertOne({ username, password });
+
+    console.log(`User created with _id: ${result.insertedId}`);
+  } finally {
+    await client.close();
+  }
+}
+
+// Example usage
+//createUser('john_doe', 'password123').catch(console.error);
+
 
 app.use(express.json());
 app.use(cors());

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { styled } from '@mui/system';
+import LoginRegisterModal from '../components/LoginRegisterModal';
 
 const logo = require('../images/logo.png')
 
@@ -40,7 +41,7 @@ const Navbar: React.FC = () => {
             All Movies
           </StyledButton>
           <StyledButton href="#myaccount">
-            Log-in
+            <LoginRegisterModal />
           </StyledButton>
         </div>
       </Toolbar>
