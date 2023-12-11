@@ -1,7 +1,8 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { styled } from '@mui/system';
-import LoginRegisterModal from '../components/LoginRegisterModal';
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from './LoginButton';
 
 const logo = require('../images/logo.png')
 
@@ -27,6 +28,10 @@ const StyledButton = styled(Button)({
 });
 
 const Navbar: React.FC = () => {
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+  console.log(isAuthenticated, user)
+
+
   return (
     <StyledAppBar position="sticky" style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
       <Toolbar>
@@ -41,7 +46,13 @@ const Navbar: React.FC = () => {
             All Movies
           </StyledButton>
           <StyledButton href="#myaccount">
-            <LoginRegisterModal />
+                <div>
+              {isAuthenticated ? (
+                    <p>Welcome, {user?.name ?? 'User'}!</p>
+                  ) : (
+                    <LoginButton />
+                  )}
+          </div>
           </StyledButton>
         </div>
       </Toolbar>
